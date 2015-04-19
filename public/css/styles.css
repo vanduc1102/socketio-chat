@@ -1,0 +1,13 @@
+.modal-footer {
+	border-top: 0px;
+}
+.panel {
+	margin-top: 15px;
+	margin-left: 15px;
+}
+.panel-heading span {
+	float: right;
+}
+.panel-heading h3 {
+	display: inline;
+}
