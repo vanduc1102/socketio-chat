@@ -1,6 +1,18 @@
 var myApp = angular.module('myApp', ['ngRoute']);
-myApp.controller("MainCtrl", function ($scope,$location,$http, $window){
-
+myApp.controller("MainCtrl", function ($rootScope,$scope,$location,$http, $window){
+	
+	$rootScope.authenicated = false;
+	$location.path("/");
+	
+	$rootScope.$on("$routeChangeStart", function(event, next, current) {
+		
+		if(next.requireLogin) {
+			event.preventDefault();
+			if($rootScope.authenicated){
+				$location.path("/");
+			}
+		}
+	});
 });
 
 myApp.factory('authInterceptor', function ($rootScope,  $location,$q, $window) {

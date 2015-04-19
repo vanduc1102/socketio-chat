@@ -1,14 +1,16 @@
-myApp.controller('LoginCtrl', function ($scope, $http, $location,$window) {
+myApp.controller('LoginCtrl', function ($rootScope,$scope, $http, $location,$window) {
   $scope.user={};
   $scope.submit = function () {
     $http
       .post('/login', $scope.user)
       .success(function (data, status, headers, config) {
-        if(status != 401){
+        if(status == 200){
           $window.sessionStorage.token = data.token;
           console.log(data);
           $location.path("/welcome");
+		  $rootScope.authenicated=true;
         }
+		$rootScope.authenicated=false;
         
       })
       .error(function (data, status, headers, config) {

@@ -3,13 +3,16 @@ myApp.config(['$routeProvider',
     $routeProvider.
       when('/', {
         templateUrl: 'partials/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+		requireLogin: false
       }).
       when('/welcome/', {
         templateUrl: 'partials/welcome.html',
-        controller: 'WelcomeCtrl'
+        controller: 'WelcomeCtrl',
+		requireLogin: true
       }).
       otherwise({
-        redirectTo: '/'
+        redirectTo: '/',
+		requireLogin: false
       });
   }]);
