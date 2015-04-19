@@ -1,3 +1,5 @@
+#temp files
+.*~
 # Logs
 logs
 *.log
