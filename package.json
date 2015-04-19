@@ -1,0 +1,24 @@
+{
+  "name": "socketio-chat",
+  "version": "1.0.0",
+  "description": "webapp chat using socket.IO NodeJs",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanduc1102/socketio-chat.git"
+  },
+  "keywords": [
+    "chat",
+    "socketio",
+    "nodejs"
+  ],
+  "author": "vanducld@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vanduc1102/socketio-chat/issues"
+  },
+  "homepage": "https://github.com/vanduc1102/socketio-chat"
+}
