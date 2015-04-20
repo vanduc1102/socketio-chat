@@ -28,7 +28,10 @@
   },
   "homepage": "https://github.com/vanduc1102/socketio-chat",
   "dependencies": {
+    "body-parser": "^1.5.2",
     "compression": "^1.4.3",
-    "express": "^4.12.3"
+    "express": "^4.12.3",
+    "express-jwt": "^3.0.0",
+    "jsonwebtoken": "^5.0.0"
   }
 }
