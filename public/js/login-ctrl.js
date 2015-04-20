@@ -5,13 +5,13 @@ myApp.controller('LoginCtrl', function ($rootScope,$scope, $http, $location,$win
       .post('/login', $scope.user)
       .success(function (data, status, headers, config) {
         if(status == 200){
-          $window.sessionStorage.token = data.token;
-          console.log(data);
-          $location.path("/welcome");
-		  $rootScope.authenicated=true;
-        }
-		$rootScope.authenicated=false;
-        
+			$window.sessionStorage.token = data.token;
+			$rootScope.authenicated=true;
+			$location.path("/welcome");		  
+        }else{		
+			$rootScope.authenicated=false;
+			$location.path("/");
+		}        
       })
       .error(function (data, status, headers, config) {
         // Erase the token if the user fails to log in

@@ -1,15 +1,19 @@
-myApp.controller('WelcomeCtrl', function ($scope, $http, $window) {
+myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
   $scope.message = '';
+  
+  $scope.logoutButtonClick = function(){
+	delete $window.sessionStorage.token;
+    $location.path("/");
+  }
+  
   $http
-      .get('/api/restricted')
+      .get('/api/welcome')
       .success(function (data, status, headers, config) {
+		console.log("data : ",data);
         $scope.message = data["message"];
       })
       .error(function (data, status, headers, config) {
-        // Erase the token if the user fails to log in
         delete $window.sessionStorage.token;
-
-        // Handle login errors here
         $scope.message = 'Error: Invalid user or password';
       });
 });

@@ -6,7 +6,7 @@ myApp.config(['$routeProvider',
         controller: 'LoginCtrl',
 		requireLogin: false
       }).
-      when('/welcome/', {
+      when('/welcome', {
         templateUrl: 'partials/welcome.html',
         controller: 'WelcomeCtrl',
 		requireLogin: true

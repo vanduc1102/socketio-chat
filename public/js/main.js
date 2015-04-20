@@ -1,14 +1,15 @@
 var myApp = angular.module('myApp', ['ngRoute']);
 myApp.controller("MainCtrl", function ($rootScope,$scope,$location,$http, $window){
-	
-	$rootScope.authenicated = false;
-	$location.path("/");
+	if(!$window.sessionStorage.token){
+		$rootScope.authenicated = false;
+		$location.path("/");
+	}
 	
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		
 		if(next.requireLogin) {
-			event.preventDefault();
-			if($rootScope.authenicated){
+			if($rootScope.authenicated == false){
+				event.preventDefault();
 				$location.path("/");
 			}
 		}

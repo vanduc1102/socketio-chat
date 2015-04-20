@@ -1,3 +1,12 @@
-<div id="welcomModel"  ng-controller="WelcomeCtrl" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
-    <h1>{{message}}</h1>
- </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{message}}</h3> 
+	<button type="button" class="btn btn-default" ng-click="logoutButtonClick()" aria-label="Left Align">
+		<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+  <div class="panel-footer">Panel footer</div>
+</div>
