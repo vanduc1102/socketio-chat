@@ -1,9 +1,11 @@
 var express = require('express');
+var socketIo = require('socket.io');
 var app = express();
-var http = require('http').Server(app);
+var httpServer = require('http').Server(app);
 var compression = require('compression');
 var bodyParser = require('body-parser');
 var expressJwt = require('express-jwt');
+var socketioJwt = require('socketio-jwt');
 
 var httpPort = process.env.PORT || 3000;
 var oneDay = 86400000;
@@ -50,7 +52,18 @@ app.get('/api/welcome', function (req, res) {
 	res.status(200).json({message: "Welcome to our world"});  
 });
 
+var sio = socketIo.listen(httpServer);
 
-http.listen(httpPort, function(){
+sio.set('authorization', socketioJwt.authorize({
+	secret: jwtSecret,
+	handshake: true
+}));
+
+sio.sockets.on('connection', function (socket) {
+	console.log(socket.handshake.decoded_token.email, 'connected');
+	//socket.on('event');
+});
+
+httpServer.listen(httpPort, function(){
   console.log('listening on *:'+httpPort);
 });
