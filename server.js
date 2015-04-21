@@ -11,7 +11,7 @@ var httpPort = process.env.PORT || 3000;
 var oneDay = 86400000;
 
 var jwtSecret = "gP?9x(8SM48aob38VK<Z!M:gs0Q;a8G8vx=}3i*2%l`bw*jefz02s2bAJDOlB+V";
-
+var tokenExpiration = 60*60000;
 app.use(bodyParser.json());
 app.use(compression());
 
@@ -43,26 +43,31 @@ app.post('/login', function (req, res) {
 	}
 
 	// we are sending the profile in the token
-	var token = jwt.sign(profile, jwtSecret, { expiresInMinutes: 60*5 });
+	var token = jwt.sign(profile, jwtSecret, { expiresInMinutes: 60 });
 
 	res.status(200).json({token: token});
   
 });
 app.get('/api/welcome', function (req, res) {
+	console.log("logged user : "+req.tokenData["email"]);
 	res.status(200).json({message: "Welcome to our world"});  
 });
 
 var sio = socketIo.listen(httpServer);
 
-sio.set('authorization', socketioJwt.authorize({
-	secret: jwtSecret,
-	handshake: true
+sio.use(socketioJwt.authorize({
+  secret: jwtSecret,
+  handshake: true
 }));
 
 sio.sockets.on('connection', function (socket) {
-	console.log(socket.handshake.decoded_token.email, 'connected');
-	//socket.on('event');
+	console.log('hello! ', socket.decoded_token.email);
 });
+
+//TODO - vdn - it is used for test.
+setInterval(function () {
+  sio.sockets.emit('time', Date());
+}, 5000);
 
 httpServer.listen(httpPort, function(){
   console.log('listening on *:'+httpPort);
