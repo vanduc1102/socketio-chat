@@ -7,7 +7,7 @@ myApp.config(['$routeProvider',
 		requireLogin: false
       }).
       when('/welcome', {
-        templateUrl: 'partials/welcome.html',
+        templateUrl: 'partials/chat.html',
         controller: 'WelcomeCtrl',
 		requireLogin: true
       }).
