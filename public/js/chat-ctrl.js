@@ -36,7 +36,7 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 		});
 		socket.on("message",function(data){
 			data = JSON.parse(data);
-			messagesElement.append('<div class="'+data.type+'">'+data.message+'</div>');
+			messagesElement.append('<div class="'+data.type+'"><span>'+data.type+' : </span><span>'+data.message+'</span></div>');
 		});
 	}
 	connect(); //connect now, it will drop

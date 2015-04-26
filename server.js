@@ -66,21 +66,17 @@ sio.sockets.on('connection', function (socket) {
 		'type':'serverMessage',
 		'message':'Welcome to the most interesting chat room on earth!'
 	}));
+	
+	socket.on("message",function(message){
+		var message = JSON.parse(message);
+		if(message.type == 'userMessage'){
+			socket.broadcast.send(JSON.stringify(message));
+			message.type="myMessage";
+			socket.send(JSON.stringify(message));
+		}
+	});
 });
 
-//TODO - vdn - it is used for test.
-//setInterval(function () {
-//  sio.sockets.emit('time', Date());
-//}, 5000);
-
-sio.sockets.on("message",function(message){
-	message = JSON.parse(message);
-	if(message.type == 'userMessage'){
-		socket.broadcast.send(JSON.stringify(message));
-		message.type="myMessage";
-		socket.send(JSON.stringify(message));
-	}
-});
 httpServer.listen(httpPort, function(){
   console.log('listening on *:'+httpPort);
 });
