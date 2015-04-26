@@ -1,9 +1,19 @@
 myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 	$scope.message = '';
+	var messagesElement = angular.element("#messages");
+	var messageElement = angular.element("#message");
     var socket;
 	$scope.logoutButtonClick = function(){
 		delete $window.sessionStorage.token;
 		$location.path("/");
+	}
+	$scope.onSendMessage = function(){
+		var data = {
+			"message":messageElement.val(),
+			"type":"userMessage"
+		};
+		socket.send(JSON.stringify(data));
+		messageElement.val('');
 	}
 	
 	function connect () {
@@ -23,6 +33,10 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 				// redirect user to login page perhaps?
 				console.log("User's token has expired");
 			}
+		});
+		socket.on("message",function(data){
+			data = JSON.parse(data);
+			messagesElement.append('<div class="'+data.type+'">'+data.message+'</div>');
 		});
 	}
 	connect(); //connect now, it will drop

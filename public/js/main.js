@@ -1,3 +1,4 @@
+var DEBUG=true;
 var myApp = angular.module('myApp', ['ngRoute']);
 myApp.controller("MainCtrl", function ($rootScope,$scope,$location,$http, $window){
 	if(!$window.sessionStorage.token){
