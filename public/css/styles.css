@@ -30,6 +30,10 @@ body {
 	display: inline;
 }
 
+div#loginModal{
+	overflow:hidden;
+}
+
 div.chat-view{
 	height:100%;
 	width:100%;
