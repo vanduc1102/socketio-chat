@@ -3,12 +3,12 @@ html {
 }
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  margin: 0px;
-  padding: 0px;
-  height: -moz-calc(100% - 20px);
-  height: -webkit-calc(100% - 20px);
-  height: calc(100% - 20px);
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	margin: 0px;
+	padding: 0px;
+	height: -moz-calc(100% - 20px);
+	height: -webkit-calc(100% - 20px);
+	height: calc(100% - 20px);
 }
 
 .main-container{
