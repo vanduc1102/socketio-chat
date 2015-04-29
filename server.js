@@ -31,21 +31,43 @@ app.use('/api',function (err, req, res, next) {
 app.post('/login', function (req, res) {
 	
 	// TODO: validate the actual user user
-	var profile = {
+	var profiles = [{
 		first_name: 'John',
 		last_name: 'Doe',
 		email: 'john@doe.com',
+		username:"admin",
+		password:"123456",
 		id: 123
-	};
-	if (!(req.body.username === 'admin' && req.body.password === '123456')) {
-		res.status(401).send('Wrong user or password');
-		return;
+	},
+	{
+		first_name: 'Patrick',
+		last_name: 'Doe',
+		email: 'john@doe.com',
+		username:"user1",
+		password:"123456",
+		id: 124
+	},
+	{
+		first_name: 'David',
+		last_name: 'Doe',
+		email: 'john@doe.com',
+		username:"user2",
+		password:"123456",
+		id: 125
+	}];
+	var profile;
+	for(var i in profiles){
+		profile = profiles[i];
+		if (req.body.username == profile['username'] && req.body.password == profile['password']) {
+			// we are sending the profile in the token
+			var token = jwt.sign(profile, jwtSecret, { expiresInMinutes: 60 });
+			res.status(200).json({token: token});
+			return;
+		}
 	}
-
-	// we are sending the profile in the token
-	var token = jwt.sign(profile, jwtSecret, { expiresInMinutes: 60 });
-
-	res.status(200).json({token: token});
+	console.log("Wrong username or password.");
+	res.status(401).send('Wrong user or password');
+	return;
   
 });
 app.get('/api/welcome', function (req, res) {
