@@ -83,7 +83,6 @@ sio.use(socketioJwt.authorize({
 }));
 
 sio.sockets.on('connection', function (socket) {
-	console.log('hello! ', socket.decoded_token.email);
 	socket.send(JSON.stringify({
 		'type':'serverMessage',
 		'message':'Welcome to the most interesting chat room on earth!'
@@ -92,8 +91,8 @@ sio.sockets.on('connection', function (socket) {
 	socket.on("message",function(message){
 		var message = JSON.parse(message);
 		if(message.type == 'userMessage'){
+			message.type = socket.decoded_token.username;
 			socket.broadcast.send(JSON.stringify(message));
-			message.type="myMessage";
 			socket.send(JSON.stringify(message));
 		}
 	});
