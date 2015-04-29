@@ -97,6 +97,8 @@ sio.sockets.on('connection', function (socket) {
 			socket.send(JSON.stringify(message));
 		}
 	});
+	
+	socket.emit('name_set',{"username":socket.decoded_token.username});
 });
 
 httpServer.listen(httpPort, function(){

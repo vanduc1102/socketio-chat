@@ -1,8 +1,8 @@
 myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 	$scope.message = '';
+	var socket;
 	var messagesElement = angular.element("#messages");
 	var messageElement = angular.element("#message");
-    var socket;
 	$scope.logoutButtonClick = function(){
 		delete $window.sessionStorage.token;
 		$location.path("/");
@@ -18,8 +18,8 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 	
 	function connect () {
 		socket = io.connect($window.sessionStorage.token ? ('?token=' + $window.sessionStorage.token) : '', {
-			'forceNew': true
-		});
+				'forceNew': true
+			});
 		socket.on('pong', function () {
 			console.log('- pong');
 		}).on('time', function (data) {
@@ -37,6 +37,11 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 		socket.on("message",function(data){
 			data = JSON.parse(data);
 			messagesElement.append('<div class="'+data.type+'"><span>'+data.type+' : </span><span>'+data.message+'</span></div>');
+		});
+		socket.on('name_set',function(data){
+			console.log(data);
+			//data = JSON.parse(data);
+			messagesElement.append('<div class="'+data.type+'"><span>Hello </span><span>'+data.username+'! </span></div>');
 		});
 	}
 	connect(); //connect now, it will drop
