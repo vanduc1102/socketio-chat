@@ -7,6 +7,7 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 		delete $window.sessionStorage.token;
 		$location.path("/");
 	}
+	
 	$scope.onSendMessage = function(){
 		var data = {
 			"message":messageElement.val(),
@@ -40,7 +41,6 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 		});
 		socket.on('name_set',function(data){
 			console.log(data);
-			//data = JSON.parse(data);
 			messagesElement.append('<div class="'+data.type+'"><span>Hello </span><span>'+data.username+'! </span></div>');
 		});
 	}
@@ -54,4 +54,16 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 		delete $window.sessionStorage.token;
 		$scope.message = 'Error: Invalid user or password';
     });
+}).directive('ngEnter', function () {
+	return function (scope, element, attrs) {
+		element.bind("keydown keypress", function (event) {
+			if(event.which === 13) {
+				scope.$apply(function (){
+					scope.$eval(attrs.ngEnter);
+					scope.onSendMessage();
+				});
+				event.preventDefault();
+			}
+		});
+    };
 });
