@@ -1,4 +1,4 @@
-<div class='chat-view'>
+<div class="chat-view">
 	<header id="banner">
 		<h1>Awesome chat</h1>
 		<button class="btn btn-default" id="logoutBtn"ng-click="logoutButtonClick()">Logout</button>
@@ -6,8 +6,12 @@
 	<div class="chat-container">	
 		<div id="chatroom">
 			<div id="messages"></div>
-			<input id="message" type="text" ng-enter placeholder="Enter your message here" />
-			<input id="send" type="button" ng-click="onSendMessage()" value="Send" />
+			<div class="input-group">
+			  <input id="message" type="text" class="form-control" ng-enter  placeholder="Enter your message here">
+			  <span class="input-group-btn">
+				<button id="send" class="btn btn-default" ng-click="onSendMessage()" type="button">Send!</button>
+			  </span>
+			</div><!-- /input-group -->
 		</div>
 	</div>
 	<footer>

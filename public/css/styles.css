@@ -60,15 +60,6 @@ div#messages {
 	box-sizing:border-box;
 }
 
-input#message {
-  width: -moz-calc(100% - 80px);
-  width: -webkit-calc(100% - 80px);
-  width: calc(100% - 80px);
-}
-
-input#send {
-  width: 74px;
-}
 
 header{
   background-color:#4192C1;
@@ -91,8 +82,6 @@ footer{
   padding: 6px;
   background-color:#4192C1;
   color: #FFFFFF;
-  bottom: 0;
-  position: absolute;
   width: 100%;
   margin: 0px;
   margin-bottom: 10px;

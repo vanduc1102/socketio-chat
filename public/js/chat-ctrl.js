@@ -9,12 +9,16 @@ myApp.controller('WelcomeCtrl', function ($scope, $location,$http, $window) {
 	}
 	
 	$scope.onSendMessage = function(){
-		var data = {
-			"message":messageElement.val(),
-			"type":"userMessage"
-		};
-		socket.send(JSON.stringify(data));
-		messageElement.val('');
+		var message = messageElement.val();
+		if(message){
+			var data = {
+				"message":message,
+				"type":"userMessage"
+			};
+			socket.send(JSON.stringify(data));
+			messageElement.val('');
+		}
+		
 	}
 	
 	function connect () {
