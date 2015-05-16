@@ -83,21 +83,27 @@ sio.use(socketioJwt.authorize({
 }));
 
 sio.sockets.on('connection', function (socket) {
-	socket.send(JSON.stringify({
-		'type':'serverMessage',
-		'message':'Welcome to the most interesting chat room on earth!'
-	}));
+	var loggedUsername = socket.decoded_token.username;
+	
+	socket.on('set_name', function(data){
+		socket.emit('name_set', {"username":loggedUsername,"type":"welcomeUser"});
+	
+		socket.send(JSON.stringify({
+			type:'serverMessage',
+			message: 'Welcome to the most interesting chat room on earth!'})
+		);
+		
+		socket.broadcast.emit('user_entered', {"username":loggedUsername});
+	})
 	
 	socket.on("message",function(message){
 		var message = JSON.parse(message);
 		if(message.type == 'userMessage'){
-			message.type = socket.decoded_token.username;
+			message.username = socket.decoded_token.username;
 			socket.broadcast.send(JSON.stringify(message));
 			socket.send(JSON.stringify(message));
 		}
 	});
-	
-	socket.emit('name_set',{"username":socket.decoded_token.username});
 });
 
 httpServer.listen(httpPort, function(){

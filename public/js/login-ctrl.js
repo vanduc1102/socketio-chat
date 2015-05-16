@@ -6,8 +6,13 @@ myApp.controller('LoginCtrl', function ($rootScope,$scope, $http, $location,$win
       .success(function (data, status, headers, config) {
         if(status == 200){
 			$window.sessionStorage.token = data.token;
+			$window.sessionStorage.username = $scope.user.username;
 			$rootScope.authenicated=true;
-			$location.path("/welcome");		  
+			$location.path("/welcome");
+			$rootScope.socket = io.connect($window.sessionStorage.token ? ('?token=' + $window.sessionStorage.token) : '',{
+				'forceNew': true
+			});
+			$rootScope.socket.emit("set_name", {name: $window.sessionStorage.username});  
         }else{		
 			$rootScope.authenicated=false;
 			$location.path("/");

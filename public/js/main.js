@@ -4,7 +4,12 @@ myApp.controller("MainCtrl", function ($rootScope,$scope,$location,$http, $windo
 	if(!$window.sessionStorage.token){
 		$rootScope.authenicated = false;
 		$location.path("/");
-	}
+	}else{
+		$rootScope.socket = io.connect($window.sessionStorage.token ? ('?token=' + $window.sessionStorage.token) : '',{
+				'forceNew': true
+		});
+		$rootScope.socket.emit("set_name", {name: $window.sessionStorage.username});  
+	}	
 	
 	$rootScope.$on("$routeChangeStart", function(event, next, current) {
 		
