@@ -71,7 +71,6 @@ app.post('/login', function (req, res) {
   
 });
 app.get('/api/welcome', function (req, res) {
-	console.log("logged user : "+req.tokenData["email"]);
 	res.status(200).json({message: "Welcome to our world"});  
 });
 
@@ -103,6 +102,10 @@ sio.sockets.on('connection', function (socket) {
 			socket.broadcast.send(JSON.stringify(message));
 			socket.send(JSON.stringify(message));
 		}
+	});
+	
+	socket.on("disconnect", function(){
+		socket.broadcast.emit('user_left', {"username":loggedUsername});
 	});
 });
 

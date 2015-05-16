@@ -4,6 +4,7 @@ myApp.controller('WelcomeCtrl', function ($scope,$rootScope, $location,$http, $w
 	var messagesElement = angular.element("#messages");
 	var messageElement = angular.element("#message");
 	$scope.logoutButtonClick = function(){
+		socket.disconnect();
 		delete $window.sessionStorage.token;
 		$location.path("/");
 	}
@@ -51,6 +52,10 @@ myApp.controller('WelcomeCtrl', function ($scope,$rootScope, $location,$http, $w
 	
 	socket.on("user_entered", function(user){
 		messagesElement.append('<div class="systemMessage">' +user.username + ' has joined the room.' + '</div>');
+	});
+	
+	socket.on("user_left", function(user){
+		messagesElement.append('<div class="systemMessage">' +user.username + ' has left the room.' + '</div>');
 	});
 		
 	$http.get('/api/welcome')
